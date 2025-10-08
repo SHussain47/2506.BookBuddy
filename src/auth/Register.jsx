@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "./AuthContext";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export default function Register() {
   const { register } = useAuth();
@@ -64,7 +64,7 @@ export default function Register() {
         {error && <p role="alert">{error}</p>}
       </form>
       <p>
-        Already have an account? <a>Log in</a> here.
+        Already have an account? <Link>Log in</Link> here.
       </p>
     </>
   );

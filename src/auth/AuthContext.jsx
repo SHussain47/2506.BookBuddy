@@ -21,7 +21,21 @@ export function AuthProvider({ children }) {
     setToken(result.token);
   };
 
-  const value = { token, register };
+  // LOGIN LOGIC
+  const login = async (credentials) => {
+    const response = await fetch(`${API}/users/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(credentials),
+    });
+    const result = await response.json();
+    if (!response) {
+      throw Error(result.message);
+    }
+    setToken(result.token);
+  };
+
+  const value = { token, register, login };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
