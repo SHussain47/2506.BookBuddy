@@ -14,10 +14,11 @@ export default function BookPage() {
   }, []);
   return (
     <>
-      <h1>Books</h1>
-      {books.map((book) => (
-        <BookDetail key={book.id} book={book} syncBooks={syncBooks} />
-      ))}
+      <div className="book-container">
+        {books.map((book) => (
+          <BookDetail key={book.id} book={book} syncBooks={syncBooks} />
+        ))}
+      </div>
     </>
   );
 }
