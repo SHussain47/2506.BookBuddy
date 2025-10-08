@@ -19,6 +19,7 @@ export function AuthProvider({ children }) {
       throw Error(result.message);
     }
     setToken(result.token);
+    localStorage.setItem("token", token);
   };
 
   const value = { token, register };
