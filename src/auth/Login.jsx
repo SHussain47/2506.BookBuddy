@@ -3,11 +3,11 @@ import { useAuth } from "./AuthContext";
 import { Link, Navigate } from "react-router";
 
 export default function Login() {
-  const { login } = useAuth;
+  const { login } = useAuth();
   const [error, setError] = useState(null);
 
   const tryLogin = async (event) => {
-    event.prevenetDefault();
+    event.preventDefault();
     setError(null);
 
     const formData = new FormData(event.target);
@@ -15,8 +15,9 @@ export default function Login() {
     const password = formData.get("password");
 
     try {
-      await login(email, password);
+      await login({ email, password });
       // Navigate to main page
+      console.log("Logged In!");
     } catch (error) {
       setError(error.message);
     }
@@ -37,7 +38,9 @@ export default function Login() {
         <button>Login</button>
         {error && <p role="alert">{error}</p>}
       </form>
-      <p>Don't have an account? <Link>Register</Link>!</p>
+      <p>
+        Don't have an account? <Link>Register</Link>!
+      </p>
     </>
   );
 }

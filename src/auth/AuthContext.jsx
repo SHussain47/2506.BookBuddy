@@ -19,6 +19,7 @@ export function AuthProvider({ children }) {
       throw Error(result.message);
     }
     setToken(result.token);
+    localStorage.setItem("token", result.token);
   };
 
   // LOGIN LOGIC
@@ -33,6 +34,7 @@ export function AuthProvider({ children }) {
       throw Error(result.message);
     }
     setToken(result.token);
+    localStorage.setItem("token", result.token);
   };
 
   // LOGOUT LOGIC

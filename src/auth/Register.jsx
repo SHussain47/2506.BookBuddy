@@ -20,6 +20,7 @@ export default function Register() {
 
     try {
       await register({ firstName, lastName, email, password });
+      console.log("Registered!")
       //navigate("/location")
     } catch (error) {
       setError(error.message);
