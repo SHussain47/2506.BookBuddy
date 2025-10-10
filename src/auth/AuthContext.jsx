@@ -25,7 +25,6 @@ export function AuthProvider({ children }) {
       throw Error(result.message);
     }
     setToken(result.token);
-    setUserInfo(result.user);
     localStorage.setItem("token", result.token);
   };
 
@@ -41,7 +40,6 @@ export function AuthProvider({ children }) {
       throw Error(result.message);
     }
     setToken(result.token);
-    setUserInfo(result.user);
     localStorage.setItem("token", result.token);
   };
 
@@ -51,7 +49,7 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("token");
   };
 
-  const value = { token, userInfo, register, login, logout };
+  const value = { token, register, login, logout };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
