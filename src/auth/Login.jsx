@@ -10,6 +10,8 @@ export default function Login() {
     event.preventDefault();
     setError(null);
 
+    // console.log(event.target);
+
     const formData = new FormData(event.target);
     const email = formData.get("email");
     const password = formData.get("password");
@@ -17,7 +19,6 @@ export default function Login() {
     try {
       await login({ email, password });
       // Navigate to main page
-      console.log("Logged In!");
     } catch (error) {
       setError(error.message);
     }

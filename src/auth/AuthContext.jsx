@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const API = import.meta.env.VITE_API;
 
@@ -6,6 +6,12 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [token, setToken] = useState();
+
+  // VERIFYING IF USER IS ALREADY LOGGED IN
+  useEffect(() => {
+    const savedToken = localStorage.getItem("token");
+    if (savedToken) setToken(savedToken);
+  }, [token]);
 
   // REGISTER LOGIC
   const register = async (credentials) => {
@@ -19,6 +25,7 @@ export function AuthProvider({ children }) {
       throw Error(result.message);
     }
     setToken(result.token);
+    setUserInfo(result.user);
     localStorage.setItem("token", result.token);
   };
 
@@ -34,6 +41,7 @@ export function AuthProvider({ children }) {
       throw Error(result.message);
     }
     setToken(result.token);
+    setUserInfo(result.user);
     localStorage.setItem("token", result.token);
   };
 
@@ -43,7 +51,7 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("token");
   };
 
-  const value = { token, register, login, logout };
+  const value = { token, userInfo, register, login, logout };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

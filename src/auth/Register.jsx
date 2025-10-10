@@ -8,6 +8,9 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
+  // console.log(email);
+  // console.log(password);
+
   const tryRegister = async (event) => {
     event.preventDefault();
     setError(null);
@@ -20,7 +23,6 @@ export default function Register() {
 
     try {
       await register({ firstName, lastName, email, password });
-      console.log("Registered!")
       //navigate("/location")
     } catch (error) {
       setError(error.message);

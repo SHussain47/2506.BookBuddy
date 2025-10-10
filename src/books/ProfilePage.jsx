@@ -5,7 +5,7 @@ export default function ProfilePage() {
 
   return (
     <>
-      <h1>Welcome</h1>
+      <h1>Welcome {userInfo ? userInfo.firstName : "Guest"}</h1>
 
       <button onClick={() => logout()}>Logout</button>
     </>
