@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useAuth } from "./AuthContext";
-import { Link, Navigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export default function Login() {
   const { login } = useAuth();
+  const navigate = useNavigate();
   const [error, setError] = useState(null);
 
   const tryLogin = async (event) => {
@@ -18,7 +19,7 @@ export default function Login() {
 
     try {
       await login({ email, password });
-      // Navigate to main page
+      navigate("/")
     } catch (error) {
       setError(error.message);
     }
@@ -40,7 +41,7 @@ export default function Login() {
         {error && <p role="alert">{error}</p>}
       </form>
       <p>
-        Don't have an account? <Link>Register</Link>!
+        Don't have an account? <Link to={`/register`} >Register</Link>!
       </p>
     </>
   );

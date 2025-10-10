@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router";
+
 import Register from "./auth/Register";
 import Login from "./auth/Login";
 import ProfilePage from "./books/ProfilePage";
@@ -7,10 +8,11 @@ import ProfilePage from "./books/ProfilePage";
 export default function App() {
   return (
     <>
-      <h1>Test</h1>
-      <Register />
-      <Login />
-      <ProfilePage />
+      <Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/account-info" element={<ProfilePage />} />
+      </Routes>
     </>
   )
 }

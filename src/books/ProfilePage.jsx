@@ -21,7 +21,7 @@ export default function ProfilePage() {
 
     if (token) getAccDetails();
   }, [token]);
-
+console.log(userInfo)
   return (
     <>
       <h1>Welcome {userInfo ? userInfo.firstname : "Guest"}</h1>
