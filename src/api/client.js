@@ -1,24 +1,27 @@
-export const API_URL = import.meta.env.VITE_API_URL;
+const BASE = import.meta.env.VITE_API_URL;
 
-export async function api(path, options = {}) {
-  if (!API_URL) throw new Error("Missing VITE_API_URL in .env");
-
-  const res = await fetch(`${API_URL}${path}`, {
+export async function api(
+  path,
+  { method = "GET", body, headers, ...rest } = {}
+) {
+  const res = await fetch(`${BASE}${path}`, {
+    method,
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
-      ...(options.headers || {}),
+      ...(headers || {}),
     },
-    ...options,
+    body: body ? JSON.stringify(body) : undefined,
+    ...rest,
   });
 
   if (!res.ok) {
-    let message = `Request failed: ${res.status}`;
+    let msg;
     try {
-      const data = await res.json();
-      message = data?.message || JSON.stringify(data) || message;
-    } catch {}
-    throw new Error(message);
+      msg = await res.text();
+    } catch {
+      msg = res.statusText;
+    }
+    throw new Error(`Request failed: ${res.status} ${msg}`);
   }
 
   return res.json();
