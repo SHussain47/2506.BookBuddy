@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate, NavLink, useParams } from "react-router-dom";
 import Header from "./Layout/Header.jsx";
 import Catalog from "./books/Catalog.jsx";
+import NotFound from "./not-found/NotFound.jsx";
 
 export default function App() {
 
@@ -25,7 +26,7 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/account" element={<AccountPage />} />
 
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
     </>
@@ -62,13 +63,4 @@ function LoginPage() {
 
 function AccountPage() {
   return <h1>Account</h1>;
-}
-
-function NotFoundPage() {
-  return (
-    <>
-      <h1>Page not found</h1>
-      <NavLink to="/books">Go back to Books</NavLink>
-    </>
-  );
 }
