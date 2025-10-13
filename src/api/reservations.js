@@ -1,4 +1,5 @@
 const API = import.meta.env.VITE_API;
+
 export async function getBooks() {
   console.log("API:", API);
 
@@ -33,3 +34,21 @@ export async function makeReservation(token, book) {
   }
   return result;
 }
+
+// GET account details
+export async function getAccountDetails(token) {
+  try {
+    const response = await fetch(`${API}/users/me`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Error with /GET account details fucntion: ", error);
+    return []; // Prevent undefine return
+  }
+}
+
