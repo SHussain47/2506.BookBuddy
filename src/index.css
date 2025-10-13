@@ -35,3 +35,8 @@
   border: none;
   box-shadow: 0 2px 4px;
 }
+
+.reserve-btn:hover {
+  background-color: rgb(116, 139, 124);
+  box-shadow: 0 5px 10px;
+}

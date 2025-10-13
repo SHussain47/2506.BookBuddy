@@ -33,3 +33,42 @@ export async function makeReservation(token, book) {
   }
   return result;
 }
+
+export async function getMyReservations() {
+  const token = "dummy-token";
+  try {
+    const response = await fetch(`${API}/users/me`, {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    if (!response.ok)
+      throw new Error(result.message || "Failed to get reservations");
+    return result.reservedBooks;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+}
+
+export async function returnBook(bookId) {
+  const token = "dummy-token";
+  try {
+    const response = await fetch(`${API}/books/${bookId}/return`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    if (!response.ok)
+      throw new Error(result.message || "Failed to return book.");
+    return result;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+}
