@@ -4,7 +4,6 @@ import Catalog from "./books/Catalog.jsx";
 import NotFound from "./not-found/NotFound.jsx";
 
 export default function App() {
-
   const isLoggedIn = false;
 
   function handleLogout() {
@@ -26,6 +25,7 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/account" element={<AccountPage />} />
 
+          {/* 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
@@ -34,7 +34,6 @@ export default function App() {
 }
 
 /* ---------- placeholders for branch fix ---------- */
-
 function BookDetailLinkOnly() {
   const { id } = useParams();
   return (
