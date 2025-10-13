@@ -18,14 +18,8 @@ export default function Register() {
     event.preventDefault();
     setError(null);
 
-    // const formData = new FormData(event.target);
-    // const firstName = formData.get("firstName");
-    // const lastName = formData.get("lastName");
-    // const email = formData.get("email");
-    // const password = formData.get("password");
-
-    console.log("FirstName: ", firstName);
-    console.log("LastName: ", lastname);
+    // console.log("FirstName: ", firstName);
+    // console.log("LastName: ", lastname);
 
     try {
       await register({ firstname: firstName, lastname, email, password });
@@ -85,7 +79,7 @@ export default function Register() {
         {error && <p role="alert">{error}</p>}
       </form>
       <p>
-        Already have an account? <Link to={`/login`}>Log in</Link> here.
+        Already have an account? <Link to="/login">Log In</Link> here.
       </p>
     </>
   );
