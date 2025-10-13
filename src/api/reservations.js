@@ -15,6 +15,7 @@ console.log("API:", API);
 
 export async function makeReservation(token, book) {
   if (!token) {
+    const token = "dummy-token";
     throw Error("You must be signed in to make a reservation.");
   }
   if (!book.available) {
@@ -28,9 +29,11 @@ export async function makeReservation(token, book) {
     },
   });
   const result = await response.json();
+
   if (!response.ok) {
     throw Error(result.message || "Failed to reserve book.");
   }
+  alert(`You have reserved "${book.title}"`);
   return result;
 }
 
@@ -46,9 +49,9 @@ export async function getMyReservations() {
     const result = await response.json();
     if (!response.ok)
       throw new Error(result.message || "Failed to get reservations");
+
     return result.reservedBooks;
   } catch (e) {
-    console.error(e);
     return [];
   }
 }
