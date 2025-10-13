@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./Layout/Header.jsx";
 
@@ -27,6 +28,20 @@ export default function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
+=======
+import React from "react";
+import BookPage from "./books/BookPage";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+export default function App() {
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navigate to="/books" replace />} />
+          <Route path="books" element={<BookPage />} />
+        </Routes>
+      </BrowserRouter>
+>>>>>>> origin/main
     </>
   );
 }
