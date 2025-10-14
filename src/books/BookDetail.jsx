@@ -19,15 +19,31 @@ export default function BookDetail({ book, syncBooks }) {
   };
 
   return (
-    <article className="book-card">
+    <article className="book-card" style={{ border: "1px solid #ddd", padding: 16, borderRadius: 8, marginBottom: 12 }}>
       <h2>{book.title}</h2>
-      <p>{book.author}</p>
+      <p><strong>{book.author}</strong></p>
       <p>{book.description}</p>
-      {book.coverimage && <img src={book.coverimage} alt={book.title} />}
 
-      {error && <p role="alert">{error}</p>}
+      {error && (
+        <p role="alert" style={{ color: "crimson", marginTop: 8 }}>
+          {error}
+        </p>
+      )}
 
-      <button onClick={tryMakeReservation} disabled={!book.available}>
+
+      {book.coverimage && (
+        <img
+          src={book.coverimage}
+          alt={book.title}
+          style={{ display: "block", maxWidth: 240, marginTop: 8 }}
+        />
+      )}
+
+      <button
+        onClick={tryMakeReservation}
+        disabled={!book.available}
+        style={{ marginTop: 12 }}
+      >
         {book.available ? "Reserve" : "Unavailable"}
       </button>
     </article>
