@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { makeReservation } from "../api/reservations";
-// import { useAuth } from "../auth/AuthContext";
+import { useAuth } from "../auth/AuthContext";
 
 export default function BookDetail({ book, syncBooks }) {
-  // const { token } = useAuth();
+  const { token } = useAuth();
   const [error, setError] = useState(null);
 
   if (!book) return <p>Loading book details....</p>;
@@ -11,7 +11,7 @@ export default function BookDetail({ book, syncBooks }) {
   const tryMakeReservation = async () => {
     setError(null);
     try {
-      await makeReservation("dummy-token", book);
+      await makeReservation(token, book);
       await syncBooks();
     } catch (e) {
       setError(e.message);

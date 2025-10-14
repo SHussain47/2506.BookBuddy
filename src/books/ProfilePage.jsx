@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
-import { getAccountDetails } from "../api/CRUD";
-import { Link } from "react-router";
+import { getAccountDetails } from "../api/reservations";
+import { Link, useNavigate } from "react-router";
 
 export default function ProfilePage() {
   const { logout, token } = useAuth();
   const [userInfo, setUserInfo] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getAccDetails() {
@@ -21,7 +22,15 @@ export default function ProfilePage() {
 
     if (token) getAccDetails();
   }, [token]);
-console.log(userInfo)
+
+  const handleLogout = () => {
+    logout();
+    navigate("/books");
+  }
+
+  // console.log(userInfo.reservation);
+  console.log(userInfo);
+
   return (
     <>
       <h1>Welcome {userInfo ? userInfo.firstname : "Guest"}</h1>
@@ -31,11 +40,11 @@ console.log(userInfo)
         <p>{userInfo.reservation}</p>
       ) : (
         <p>
-          You have not reserved any books yet. Browse our <Link>catalog</Link>!
+          You have not reserved any books yet. Browse our <Link to="/books">catalog</Link>!
         </p>
       )}
 
-      <button onClick={() => logout()}>Logout</button>
+      <button onClick={handleLogout}>Logout</button>
     </>
   );
 }
