@@ -11,6 +11,9 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
     if (savedToken) setToken(savedToken);
+  }, []);
+  useEffect(() => {
+    console.log("Auth token loaded:", token);
   }, [token]);
 
   // REGISTER LOGIC

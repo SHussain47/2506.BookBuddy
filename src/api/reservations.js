@@ -52,7 +52,7 @@ export async function getMyReservations(token) {
     const result = await response.json();
     if (!response.ok) throw new Error(result.message || "Failed to get reservations");
 
-    return result.reservedBooks;
+    return result;
   } catch (e) {
     return [];
   }
