@@ -1,6 +1,17 @@
+<<<<<<< HEAD
 import { Routes, Route, Navigate, NavLink, useParams } from "react-router-dom";
 import Header from "./Layout/Header.jsx";
 import Catalog from "./books/Catalog.jsx";
+=======
+import React from "react";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+
+import BookPage from "./books/BookPage";
+import Account from "./account/Account";
+import Register from "./auth/Register";
+import Login from "./auth/Login";
+import ProfilePage from "./books/ProfilePage";
+>>>>>>> origin/main
 
 export default function App() {
 
@@ -12,6 +23,7 @@ export default function App() {
 
   return (
     <>
+<<<<<<< HEAD
       <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
 
       <main style={{ padding: "16px", maxWidth: 900, margin: "0 auto" }}>
@@ -69,6 +81,16 @@ function NotFoundPage() {
     <>
       <h1>Page not found</h1>
       <NavLink to="/books">Go back to Books</NavLink>
+=======
+      <Routes>
+        <Route path="/" element={<Navigate to="/books" replace />} />
+        <Route path="books" element={<BookPage />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/account-info" element={<ProfilePage />} />
+      </Routes>
+>>>>>>> origin/main
     </>
   );
 }
