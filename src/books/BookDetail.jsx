@@ -23,6 +23,7 @@ export default function BookDetail({ book, syncBooks }) {
       <h2>{book.title}</h2>
       <p>{book.author}</p>
       <p>{book.description}</p>
+      {book.coverimage && <img src={book.coverimage} alt={book.title} />}
 
       {error && <p role="alert">{error}</p>}
 
