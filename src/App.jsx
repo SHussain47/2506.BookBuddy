@@ -10,16 +10,14 @@ import ProfilePage from "./books/ProfilePage";
 export default function App() {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Navigate to="/books" replace />} />
-          <Route path="books" element={<BookPage />} />
-          <Route path="/account" element={<Account />}></Route>
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/account-info" element={<ProfilePage />} />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/books" replace />} />
+        <Route path="books" element={<BookPage />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/account-info" element={<ProfilePage />} />
+      </Routes>
     </>
   );
 }

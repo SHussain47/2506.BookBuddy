@@ -12,22 +12,24 @@ export async function getBooks() {
     return [];
   }
 }
-console.log("API:", API);
+// console.log("API:", API);
 
 export async function makeReservation(token, book) {
+  const bookId = book.id;
   if (!token) {
-    const token = "dummy-token";
+    // const token = "dummy-token";
     throw Error("You must be signed in to make a reservation.");
   }
   if (!book.available) {
     throw Error("This book is currently unavailable.");
   }
-  const response = await fetch(`${API}/books/${book.id}/reserve`, {
+  const response = await fetch(`${API}/reservations`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
+    body: JSON.stringify({ bookId }),
   });
   const result = await response.json();
 
@@ -38,18 +40,17 @@ export async function makeReservation(token, book) {
   return result;
 }
 
-export async function getMyReservations() {
-  const token = "dummy-token";
+export async function getMyReservations(token) {
+  // const token = "dummy-token";
   try {
-    const response = await fetch(`${API}/users/me`, {
+    const response = await fetch(`${API}/reservations`, {
       headers: {
         "content-type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
     const result = await response.json();
-    if (!response.ok)
-      throw new Error(result.message || "Failed to get reservations");
+    if (!response.ok) throw new Error(result.message || "Failed to get reservations");
 
     return result.reservedBooks;
   } catch (e) {
@@ -57,8 +58,8 @@ export async function getMyReservations() {
   }
 }
 
-export async function returnBook(bookId) {
-  const token = "dummy-token";
+export async function returnBook(bookId, token) {
+  // const token = "dummy-token";
   try {
     const response = await fetch(`${API}/books/${bookId}/return`, {
       method: "POST",
@@ -68,8 +69,7 @@ export async function returnBook(bookId) {
       },
     });
     const result = await response.json();
-    if (!response.ok)
-      throw new Error(result.message || "Failed to return book.");
+    if (!response.ok) throw new Error(result.message || "Failed to return book.");
     return result;
   } catch (e) {
     console.error(e);
@@ -92,4 +92,3 @@ export async function getAccountDetails(token) {
     return []; // Prevent undefine return
   }
 }
-

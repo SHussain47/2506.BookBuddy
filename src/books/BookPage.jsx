@@ -12,6 +12,7 @@ export default function BookPage() {
   useEffect(() => {
     syncBooks();
   }, []);
+  
   return (
     <>
       <div className="book-container">

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { getMyReservations } from "../api/reservations";
+import { useAuth } from "../auth/AuthContext";
 
 export default function Account() {
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { token } = useAuth();
 
   useEffect(() => {
     async function fetchReservations() {
@@ -18,7 +20,7 @@ export default function Account() {
     const success = await returnBook(reservationId);
     if (success) {
       alert("Return book completed!");
-      const result = await getMyReservations();
+      const result = await getMyReservations(token);
       setReservations(result);
     }
   }
