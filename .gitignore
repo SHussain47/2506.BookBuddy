@@ -22,4 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+<<<<<<< HEAD
+.env
+node_modules/
+dist/
+.DS_Store
+=======
 .env.local
+>>>>>>> origin/main
