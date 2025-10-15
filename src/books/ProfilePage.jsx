@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { getAccountDetails } from "../api/reservations";
-import { Link, useNavigate } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 
 export default function ProfilePage() {
   const { logout, token } = useAuth();
@@ -26,7 +26,7 @@ export default function ProfilePage() {
   const handleLogout = () => {
     logout();
     navigate("/books");
-  }
+  };
 
   // console.log(userInfo.reservation);
   console.log(userInfo);
@@ -35,10 +35,12 @@ export default function ProfilePage() {
     <>
       <h1>Welcome {userInfo ? userInfo.firstname : "Guest"}</h1>
       <p>Your email on file is: {userInfo ? userInfo.email : "LogIn first to see details"}</p>
+
       <h2>Your Reservations</h2>
-      {userInfo && userInfo.reservation ? (
-        <p>{userInfo.reservation}</p>
-      ) : (
+
+      <Outlet />
+
+      {!userInfo?.reservation?.length && (
         <p>
           You have not reserved any books yet. Browse our <Link to="/books">catalog</Link>!
         </p>

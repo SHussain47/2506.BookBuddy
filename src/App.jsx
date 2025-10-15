@@ -12,11 +12,14 @@ export default function App() {
     <>
       <Routes>
         <Route path="/" element={<Navigate to="/books" replace />} />
+        <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
+
+        <Route path="account-info" element={<ProfilePage />}>
+          <Route index element={<Account />} />
+        </Route>
+
         <Route path="books" element={<BookPage />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/account-info" element={<ProfilePage />} />
       </Routes>
     </>
   );
