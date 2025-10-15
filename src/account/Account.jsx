@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMyReservations } from "../api/reservations";
+import { returnBook } from "../api/reservations";
 import { useAuth } from "../auth/AuthContext";
 
 export default function Account() {
@@ -8,20 +9,39 @@ export default function Account() {
   const { token } = useAuth();
 
   useEffect(() => {
+    // If token hasn't loaded yet, do nothing
+    if (token === undefined) return;
+
     async function fetchReservations() {
-      const data = await getMyReservations();
-      setReservations(data);
-      setLoading(false);
+      if (!token) {
+        console.warn("No token found — user not logged in.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const data = await getMyReservations(token);
+        console.log("Fetched reservations: ", data);
+        setReservations(data || []);
+      } catch (error) {
+        console.error("Failed to fetch reservations:", error);
+      } finally {
+        setLoading(false);
+      }
     }
+
     fetchReservations();
-  }, []);
+  }, [token]);
 
   async function handleReturn(reservationId) {
-    const success = await returnBook(reservationId);
-    if (success) {
-      alert("Return book completed!");
-      const result = await getMyReservations(token);
-      setReservations(result);
+    try {
+      const success = await returnBook(reservationId, token);
+      if (success) {
+        alert("Return book completed!");
+        setReservations((prev) => prev.filter((res) => res.id !== reservationId));
+      }
+    } catch (error) {
+      console.error("Failed to return book:", error);
     }
   }
 
@@ -40,9 +60,7 @@ export default function Account() {
               <div>
                 <h3>{book.title}</h3>
                 <p>{book.author}</p>
-                <button onClick={() => handleReturn(book.id)}>
-                  Return Book
-                </button>
+                <button onClick={() => handleReturn(book.id)}>Return Book</button>
               </div>
             </div>
           ))}

@@ -1,50 +1,17 @@
-<<<<<<< HEAD
 import { Routes, Route, Navigate, NavLink, useParams } from "react-router-dom";
 import Header from "./Layout/Header.jsx";
+
 import Catalog from "./books/Catalog.jsx";
-=======
-import React from "react";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import BookPage from "./books/BookPage.jsx";
+import Account from "./account/Account.jsx";
+import Register from "./auth/Register.jsx";
+import Login from "./auth/Login.jsx";
+import ProfilePage from "./books/ProfilePage.jsx";
 
-import BookPage from "./books/BookPage";
-import Account from "./account/Account";
-import Register from "./auth/Register";
-import Login from "./auth/Login";
-import ProfilePage from "./books/ProfilePage";
->>>>>>> origin/main
-
-export default function App() {
-
-  const isLoggedIn = false;
-
-  function handleLogout() {
-    console.log("TODO: call authContext.logout()");
-  }
-
-  return (
-    <>
-<<<<<<< HEAD
-      <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
-
-      <main style={{ padding: "16px", maxWidth: 900, margin: "0 auto" }}>
-        <Routes>
-          <Route path="/" element={<Navigate to="/books" replace />} />
-          <Route path="/books" element={<Catalog />} />
-          <Route path="/books/:id" element={<BookDetailLinkOnly />} />
-
-          {/* placeholders for team */}
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/account" element={<AccountPage />} />
-
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </main>
-    </>
-  );
+function NotFound() {
+  return <p>404 — Page not found. <a href="/books">Back to books</a></p>;
 }
 
-/* ---------- placeholders for branch fix ---------- */
 
 function BookDetailLinkOnly() {
   const { id } = useParams();
@@ -58,7 +25,14 @@ function BookDetailLinkOnly() {
 }
 
 function RegisterPage() {
-  return <h1>Register</h1>;
+  return (
+    <>
+      <h1>Register</h1>
+      <p>
+        Already have an account? <NavLink to="/login">Login</NavLink>.
+      </p>
+    </>
+  );
 }
 
 function LoginPage() {
@@ -76,21 +50,35 @@ function AccountPage() {
   return <h1>Account</h1>;
 }
 
-function NotFoundPage() {
+
+export default function App() {
+  const isLoggedIn = false;
+
+  function handleLogout() {
+    console.log("TODO: call authContext.logout()");
+  }
+
   return (
     <>
-      <h1>Page not found</h1>
-      <NavLink to="/books">Go back to Books</NavLink>
-=======
-      <Routes>
-        <Route path="/" element={<Navigate to="/books" replace />} />
-        <Route path="books" element={<BookPage />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/account-info" element={<ProfilePage />} />
-      </Routes>
->>>>>>> origin/main
+      <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+      <main style={{ padding: "16px", maxWidth: 900, margin: "0 auto" }}>
+        <Routes>
+          <Route path="/" element={<Navigate to="/books" replace />} />
+
+          <Route path="/books" element={<Catalog />} />
+
+          <Route path="/books/:id" element={<BookDetailLinkOnly />} />
+
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+
+          <Route path="/account" element={<Account />} />
+          <Route path="/account-info" element={<ProfilePage />} />
+
+
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
     </>
   );
 }

@@ -1,9 +1,6 @@
 const BASE = import.meta.env.VITE_API_URL;
 
-export async function api(
-  path,
-  { method = "GET", body, headers, ...rest } = {}
-) {
+export async function api(path, { method = "GET", body, headers, ...rest } = {}) {
   const res = await fetch(`${BASE}${path}`, {
     method,
     headers: {
