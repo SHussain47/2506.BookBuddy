@@ -1,13 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 const API = import.meta.env.VITE_API;
-
 const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
-  const [token, setToken] = useState();
 
-  // VERIFYING IF USER IS ALREADY LOGGED IN
+export function AuthProvider({ children }) {
+  const [token, setToken] = useState(null);
+
+ 
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
     if (savedToken) setToken(savedToken);
@@ -16,48 +16,50 @@ export function AuthProvider({ children }) {
     console.log("Auth token loaded:", token);
   }, [token]);
 
-  // REGISTER LOGIC
-  const register = async (credentials) => {
-    const response = await fetch(`${API}/users/register`, {
+ 
+  async function register(credentials) {
+    const res = await fetch(`${API}/users/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.json();
-    if (!response) {
-      throw Error(result.message);
-    }
+
+    const result = await res.json();
+    if (!res.ok) throw Error(result.message || "Register failed");
+
     setToken(result.token);
     localStorage.setItem("token", result.token);
-  };
+    return result;
+  }
 
-  // LOGIN LOGIC
-  const login = async (credentials) => {
-    const response = await fetch(`${API}/users/login`, {
+  async function login(credentials) {
+    const res = await fetch(`${API}/users/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.json();
-    if (!response) {
-      throw Error(result.message);
-    }
+
+    const result = await res.json();
+    if (!res.ok) throw Error(result.message || "Login failed");
+
     setToken(result.token);
     localStorage.setItem("token", result.token);
-  };
+    return result;
+  }
 
-  // LOGOUT LOGIC
-  const logout = () => {
+  function logout() {
     setToken(null);
     localStorage.removeItem("token");
-  };
+  }
 
   const value = { token, register, login, logout };
+
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
+
 export function useAuth() {
-  const context = useContext(AuthContext);
-  if (!context) throw Error("useAuth can only be used within AuthProvider");
-  return context;
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw Error("useAuth can only be used within <AuthProvider>");
+  return ctx;
 }
