@@ -17,7 +17,6 @@ export async function getBooks() {
 export async function makeReservation(token, book) {
   const bookId = book.id;
   if (!token) {
-    // const token = "dummy-token";
     throw Error("You must be signed in to make a reservation.");
   }
   if (!book.available) {
@@ -41,7 +40,6 @@ export async function makeReservation(token, book) {
 }
 
 export async function getMyReservations(token) {
-  // const token = "dummy-token";
   try {
     const response = await fetch(`${API}/reservations`, {
       headers: {
@@ -59,18 +57,16 @@ export async function getMyReservations(token) {
 }
 
 export async function returnBook(bookId, token) {
-  // const token = "dummy-token";
   try {
-    const response = await fetch(`${API}/books/${bookId}/return`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+    const response = await fetch(`${API}/reservations/${bookId}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
     });
-    const result = await response.json();
-    if (!response.ok) throw new Error(result.message || "Failed to return book.");
-    return result;
+
+    if (!response.ok) {
+      throw Error(result.message);
+    }
+    return true;
   } catch (e) {
     console.error(e);
     throw e;

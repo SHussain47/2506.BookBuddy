@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMyReservations } from "../api/reservations";
+import { returnBook } from "../api/reservations";
 import { useAuth } from "../auth/AuthContext";
 
 export default function Account() {
@@ -33,11 +34,14 @@ export default function Account() {
   }, [token]);
 
   async function handleReturn(reservationId) {
-    const success = await returnBook(reservationId);
-    if (success) {
-      alert("Return book completed!");
-      const result = await getMyReservations(token);
-      setReservations(result);
+    try {
+      const success = await returnBook(reservationId, token);
+      if (success) {
+        alert("Return book completed!");
+        setReservations((prev) => prev.filter((res) => res.id !== reservationId));
+      }
+    } catch (error) {
+      console.error("Failed to return book:", error);
     }
   }
 
